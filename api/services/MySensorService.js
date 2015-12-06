@@ -23,6 +23,7 @@ module.exports = {
             };
             if(data.type == 'statechanged'){
                 sails.log('debug','received statechanged ... ', newSensorValyue);
+                updateState(newSensorValyue);
             }
             Reading.create(newSensorValyue, function(err, saved){
                 if(err) sails.log('error','Error saving sensorValue', err);
@@ -46,6 +47,27 @@ module.exports = {
         }else{
             return cb();
         }
+    },
+    updateState : function(sensor){
+        SwitchSensor.findOne({internalId : sensor.internalId}).exec(function(err, switchSensor){
+            if(err) sails.log('error','Error fetching Switch Sensor', err);
+            if(switchSensor == null){
+                var newSwitchSensor = {
+                    deviceId : sensor.deviceId,
+                    sensorId : sensor.sensorId,
+                    internalId : sensor.internalId,
+                    state : sensor.value
+                };
+                SwitchSensor.create(newSwitchSensor, function(err, newOne){
+                    sails.sockets.blast('sensor.switch.status',newOne);
+                });
+            }else{
+                switchSensor.state = sensor.value;
+                SwitchSensor.update(switchSensor, function(err, updatedOne){
+                    sails.sockets.blast('sensor.switch.status', updatedOne);
+                });
+            }
+        })
     },
     toggleSwitch : function(sensor, cb){
         var that = this;
