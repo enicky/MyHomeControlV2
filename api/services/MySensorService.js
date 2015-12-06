@@ -63,7 +63,7 @@ module.exports = {
                     sails.sockets.blast('sensor.switch.status',newOne);
                 });
             }else{
-                switchSensor.state = sensor.value;
+                switchSensor.state = sensor.value == 1 ? true : false;
                 SwitchSensor.update(switchSensor, function(err, updatedOne){
                     if(err) sails.log('error','Error updateing switchsensor : ', err);
                     sails.log('debug','updated : ', updatedOne);
