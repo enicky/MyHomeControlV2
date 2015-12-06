@@ -49,7 +49,7 @@ module.exports = {
                     sensorReadings.push(reading);
                     cb();
                 });
-            }
+            };
 
             async.each(sensors, processSensor, function(err){
                 return res.send(sensorReadings);
@@ -113,14 +113,14 @@ module.exports = {
                             color : "#" + new RandomColor().toHex().value,
                             //sensor : reading,
                             data : []
-                        }
+                        };
 
                         r.data = result.map(function(m){
                             //console.log('ma = ', m._id.year);
                             var datum = new Date(m._id.year, m._id.month - 1, m._id.day, m._id.hour).getTime();
                             //console.log('datum = ', datum);
                             var data = [];
-                            data.push(datum)
+                            data.push(datum);
                             //DEBUG
                             // data.push(new Date(m._id.year, m._id.month - 1, m._id.day)),
                             data.push(m.value);
@@ -132,7 +132,7 @@ module.exports = {
                         return cb();
                     })
                 })
-            }
+            };
             async.each(devices, function(reading, cb){
                 getReadings(reading, cb);
             },function(){
@@ -200,14 +200,14 @@ module.exports = {
                             color : "#" + new RandomColor().toHex().value,
                             //sensor : reading,
                             data : []
-                        }
+                        };
 
                         r.data = result.map(function(m){
                             //console.log('ma = ', m._id.year);
                             var datum = new Date(m._id.year, m._id.month - 1, m._id.day).getTime();
                             //console.log('datum = ', datum);
                             var data = [];
-                            data.push(datum)
+                            data.push(datum);
                             //DEBUG
                            // data.push(new Date(m._id.year, m._id.month - 1, m._id.day)),
                             data.push(m.value);
@@ -220,7 +220,7 @@ module.exports = {
                     })
                 })
 
-            }
+            };
 
             async.each(devices, function(reading, cb){
                 //sails.log('debug','Getting readings :');
@@ -233,7 +233,7 @@ module.exports = {
         })
     },
     getSwitches : function(req, res){
-        Sensor.find({type : '3'}).exec(function(err, devices){
+        SwitchSensor.find().exec(function(err, devices){
             if(err) sails.log('error','Error getting switched : ', err);
             return res.send(devices);
         })
