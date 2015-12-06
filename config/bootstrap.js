@@ -115,13 +115,26 @@ module.exports.bootstrap = function (cb) {
     done();
   }
 
+  function checkMySensorSwitches(){
+    sails.log('debug','Finished Startup... request status of Switches');
+    Sensor.find({type : 3}).exec(function(err, sensors){
+      sensors.forEach(function(sensor){
+        sails.log('debug','Checking status for switch : ', sensor);
+        MySensorService.getSwitchStatus(sensor, function(){
+          sails.log('debug','Sent Status Request to sensor : ', sensor);
+        });
+      });
+    });
+  }
+
   //
   // Bootstrap
   //
   async.parallel([
     createDummyTodoData,
     createUserData,
-    boostrapPassportMiddleware
+    boostrapPassportMiddleware,
+      checkMySensorSwitches()
   ], cb);
 
 };

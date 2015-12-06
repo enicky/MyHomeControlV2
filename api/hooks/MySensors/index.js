@@ -10,14 +10,7 @@ module.exports = function mySimpleHook(sails) {
             MySensorService.initializeMySensors({
                 sails : sails
             }, function(){
-                sails.log('debug','Finished initialization MySensors... request status of Switches');
-                Sensor.find({type : 3}).exec(function(err, sensors){
-                    sensors.forEach(function(sensor){
-                        MySensorService.getSwitchStatus(sensor, function(){
-                            sails.log('debug','Sent Status Request to sensor : ', sensor);
-                        });
-                    });
-                });
+
             });
         },
 

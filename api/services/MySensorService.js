@@ -38,14 +38,6 @@ module.exports = {
             mySensorNode.init({debug : true, portname : sails.config.mysensorconfig.serialport});
             mySensorNode.openConnection(function(){
                 mySensorNode.start();
-                sails.log('debug','Start to query Sensors ... ');
-                Sensor.find({type : 3}).exec(function(err, sensors){
-                    sensors.forEach(function(sensor){
-                        MySensorService.getSwitchStatus(sensor, function(){
-                            sails.log('debug','Sent Status Request to sensor : ', sensor);
-                        });
-                    });
-                });
                 return cb();
             });
         }else{
