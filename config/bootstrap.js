@@ -126,7 +126,7 @@ module.exports.bootstrap = function (cb) {
           sails.log('debug','Sent Status Request to sensor : ', sensor);
         });
       });
-      sails.log('debug','Finished ... call done()');
+      sails.log('debug','Finished ... call done() ', c);
       c(null, 'true');
     });
   }
