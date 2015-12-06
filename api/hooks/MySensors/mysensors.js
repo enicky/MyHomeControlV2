@@ -510,6 +510,7 @@ var MySensorNode = function(sails) {
                                 break;
                             case enums.SensorData.V_LIGHT.value:
                                 valid = true;
+                                payload = parseInt(payload);
                                 sails.log('debug', 'payload = ', payload);
                                 that.emit('sensor.reading', {
                                     id: internalid,
