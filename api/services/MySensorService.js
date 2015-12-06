@@ -8,7 +8,7 @@ module.exports = {
     enums : new mySensorEnums(),
     toggleState : 0,
     initializeMySensors: function(options, cb) {
-
+        var that = this;
         sails.log('debug','Starting the Process to poll for the serial port ... ');
         mySensorNode = new MySensorNode(sails);
 
@@ -23,7 +23,7 @@ module.exports = {
             };
             if(data.type == 'statechanged'){
                 sails.log('debug','received statechanged ... ', newSensorValyue);
-                updateState(newSensorValyue);
+                MySensorService.updateState(newSensorValyue);
             }
             Reading.create(newSensorValyue, function(err, saved){
                 if(err) sails.log('error','Error saving sensorValue', err);
