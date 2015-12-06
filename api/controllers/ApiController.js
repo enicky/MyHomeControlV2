@@ -61,7 +61,7 @@ module.exports = {
         var deviceId = req.param('deviceid');
         Sensor.find({deviceid : parseInt(deviceId)}).exec(function(err, devices){
             var readingsPerSensorType =[];
-            var daysBack = Date.craete('1 day ago');
+            var daysBack = Date.create('1 day ago');
             var getReadings = function(reading, cb){
                 Reading.native(function(err, collection){
                     coçllection.aggregate([
