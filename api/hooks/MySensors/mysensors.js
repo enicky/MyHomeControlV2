@@ -513,7 +513,9 @@ var MySensorNode = function(sails) {
                                 that.emit('sensor.reading', {
                                     id: internalid,
                                     value: payload == 1 ? true : false,
-                                    type: 'statechanged'
+                                    type: 'statechanged',
+                                    typeInt : enums.SensorData.V_LIGHT.value,
+                                    typeString :  that.getVariableTypeName(enums.SensorData.V_LIGHT.value)
                                 });
                                 break;
                             case enums.SensorData.V_DIMMER.value:

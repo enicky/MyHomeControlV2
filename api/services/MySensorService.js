@@ -21,6 +21,9 @@ module.exports = {
                 type : data.typeInt,
                 deviceTypeString : data.typeString
             };
+            if(data.type == 'statechanged'){
+                sails.log('debug','received statechanged ... ', newSensorValyue);
+            }
             Reading.create(newSensorValyue, function(err, saved){
                 if(err) sails.log('error','Error saving sensorValue', err);
            //     sails.log('debug','Blasting Sensor Reading ... ');
