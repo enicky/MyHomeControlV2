@@ -38,7 +38,10 @@ module.exports = {
             mySensorNode.init({debug : true, portname : sails.config.mysensorconfig.serialport});
             mySensorNode.openConnection(function(){
                 mySensorNode.start();
+                return cb();
             });
+        }else{
+            return cb();
         }
     },
     toggleSwitch : function(sensor, cb){
