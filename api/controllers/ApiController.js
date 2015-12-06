@@ -57,6 +57,32 @@ module.exports = {
 
         });
     },
+    getSensorReadingsHourly : function(req, res){
+        var deviceId = req.params('deviceid');
+        Sensor.find({deviceid : parseInt(deviceid)}).exec(function(err, devices){
+            var readingsPerSensorType =[];
+            var daysBack = Date.craete('1 day ago');
+            var getReadings = function(reading, cb){
+                Reading.native(function(err, collection){
+                    coçllection.aggregate([
+                        {
+                            $match : {
+                                internalId : reading.internalid,
+                                createdAt : {
+                                    "$gte" : daysBack
+                                }
+                            }
+                        }
+                    ])
+                })
+            }
+            async.each(devices, function(reading, cb){
+                getReadings(reading, cb);
+            },function(){
+                return res.send(readingsPerSensorType);
+            })
+        })
+    },
     getSensorReadings : function(req, res){
         var deviceid = req.param('deviceid');
         var limit = req.param('limit');
@@ -82,7 +108,7 @@ module.exports = {
                                 "y": {"$year": "$createdAt"},
                                 "m": {"$month": "$createdAt"},
                                 "d": {"$dayOfMonth": "$createdAt"},
-                                //"h":{"$hour":"$createdAt"},
+                                "h":{"$hour":"$createdAt"},
                                 "tweet": 1,
                                 "type": "$deviceTypeString",
                                 "val": ("$value"),
@@ -93,7 +119,7 @@ module.exports = {
                         },
                         {
                             "$group": {
-                                "_id": {"year": "$y", "month": "$m", "day": "$d", "type": "$type"},
+                                "_id": {"year": "$y", "month": "$m", "day": "$d","hour":"$h", "type": "$type"},
                                 "value": {"$avg": "$val"},
                                 "aantal": {"$sum": 1},
                                 "sensorid": {"$first": "$sensorid"},
@@ -105,7 +131,8 @@ module.exports = {
                             $sort : {
                                 "_id.year" : 1,
                                 "_id.month" : 1,
-                                "_id.day" : 1
+                                "_id.day" : 1,
+                                "_id.hour" : 1
                             }
                         }
 
@@ -121,7 +148,7 @@ module.exports = {
 
                         r.data = result.map(function(m){
                             //console.log('ma = ', m._id.year);
-                            var datum = new Date(m._id.year, m._id.month - 1, m._id.day).getTime();
+                            var datum = new Date(m._id.year, m._id.month - 1, m._id.day, m._id.hour).getTime();
                             //console.log('datum = ', datum);
                             var data = [];
                             data.push(datum)

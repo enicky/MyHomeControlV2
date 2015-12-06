@@ -1502,6 +1502,7 @@
 
         function activate(){
             vm.splineData = ChartData.load('/api/readings/' + $stateParams.id + '/100');
+            vm.splineDataHourly = ChartData.load('/api/readingsHourly/' + $stateParams.id );
             vm.splineOptions = {
                 series: {
                     lines: {

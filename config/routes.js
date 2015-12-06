@@ -55,6 +55,8 @@ module.exports.routes = {
   'get /api/sensors' : 'ApiController.sensorsIndex',
   'get /api/readings/:deviceid/:limit' : 'ApiController.getSensorReadings',
   'get /api/readings/:limit' : 'ApiController.readingsIndex',
+  'get /api/readingsHourly/:deviceid' : 'ApiController.²',
+
   'get /api/latestReadings' : 'ApiController.latestReadings',
   'get /api/getSwitches' : 'ApiController.getSwitches',
   'get /api/switch/:id' : 'ApiController.toggleSwitch',
