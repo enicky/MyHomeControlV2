@@ -1596,7 +1596,7 @@
                     tickColor: '#fcfcfc',
                     mode: "time",
                     minTickSize: [1, "hour"],
-                    timeformat: "%I:%M"
+                    timeformat: "%H:%M"
 
                 },
                 yaxis: {
