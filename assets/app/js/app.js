@@ -1556,6 +1556,60 @@
                 },
                 shadowSize: 0
             };
+
+            vm.splineOptionsHourly = {
+                series: {
+                    lines: {
+                        show: false
+                    },
+                    points: {
+                        show: true,
+                        radius: 4
+                    },
+                    splines: {
+                        show: true,
+                        tension: 0.4,
+                        lineWidth: 1,
+                        fill: 0.5
+                    }
+                },
+                grid: {
+                    borderColor: '#eee',
+                    borderWidth: 1,
+                    hoverable: true,
+                    backgroundColor: '#fcfcfc'
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    content: function (label, x, y) {
+                        var timestamp = x;
+                        var date = new Date(timestamp);
+
+
+                        return date.format("{dd}/{MM}/{yyyy} {HH}:{mm}") + ' : ' + y;
+                    }
+                },
+                xaxis: {
+
+                    //   mode: 'categories',
+//                    xaxis: { mode: "time",minTickSize: [1, "day"]}
+                    tickColor: '#fcfcfc',
+                    mode: "time",
+                    minTickSize: [1, "hour"],
+                    timeformat: "%d/%m/%y"
+
+                },
+                yaxis: {
+                    //min: -10,
+                    //max: 30, // optional: use it for a clear represetation
+                    tickColor: '#eee',
+                    position: ($scope.app.layout.isRTL ? 'right' : 'left'),
+                    tickFormatter: function (v) {
+                        return v/* + ' visitors'*/;
+                    }
+                },
+                shadowSize: 0
+            };
         }
     }
 })();
