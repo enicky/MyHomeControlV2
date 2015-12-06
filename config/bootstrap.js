@@ -116,7 +116,7 @@ module.exports.bootstrap = function (cb) {
     done();
   }
 
-  function checkMySensorSwitches(done){
+  function checkMySensorSwitches(c){
     sails.log('debug','Finished Startup... request status of Switches');
     Sensor.find({type : 3}).exec(function(err, sensors){
       sails.log('debug','retrieved all switch sensors ... ', sensors);
@@ -127,7 +127,7 @@ module.exports.bootstrap = function (cb) {
         });
       });
       sails.log('debug','Finished ... call done()');
-      done();
+      c(null, 'true');
     });
   }
 
