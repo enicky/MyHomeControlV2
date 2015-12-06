@@ -8102,18 +8102,19 @@
             })
         }
         $scope.buttonClick = function(id){
-            $log.log('test buttonclick');
+            $log.log('test buttonclick', id);
+
             $resource('/api/switch/' + id).get().$promise.then(function(result){
                 $log.log('result switch : ', result);
             })
-        }
+        };
         $scope.switchChange = function(id){
             $log.log('change switch status ... ');
             $log.log('test buttonclick');
             $resource('/api/switch/' + id).get().$promise.then(function(result){
                 $log.log('result switch : ', result);
             })
-        }
+        };
         io.socket.on('sensor.reading', function(msg){
             $scope.$apply(function(){
                 $log.log('io sensor : reading : ', msg);
@@ -8129,7 +8130,7 @@
             $scope.$apply(function(){
                 $log.log('[app.js:LiveController] received switch status : ', msg);
             })
-        })
+        });
         $scope.$on('sensor.reading',function(ev, data){
             $log.log('Sensor.Reading : ', data);
         })
@@ -8165,7 +8166,7 @@
           });
             $resource('/api/readings/100').query().$promise.then(function(readings){
                 vm.readings = readings;
-            })
+            });
 
           // Changing data
 
