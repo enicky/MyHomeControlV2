@@ -8124,6 +8124,11 @@
                     }
                 })
             })
+        });
+        io.socket.on('sensor.switch.status', function(msg){
+            $scope.$apply(function(){
+                $log.log('[app.js:LiveController] received switch status : ', msg);
+            })
         })
         $scope.$on('sensor.reading',function(ev, data){
             $log.log('Sensor.Reading : ', data);
