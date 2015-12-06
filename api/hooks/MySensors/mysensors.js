@@ -658,7 +658,6 @@ MySensorNode.prototype.newDevice = function(internalid, devicetype, that) {
     //console.log('Got Device Presentation ... ');
 
     that.getDeviceInfo(deviceId, childId, function(err, device) {
-        that.sails.log('debug','[newDevie] : err : ', err, device);
         if (device != null) {
             if (device.type != devicetype) {
                 console.log('Reconditioned sensor detected (oldType="' + device.type + '" newType="' + devicetype + '")');

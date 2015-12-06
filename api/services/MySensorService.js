@@ -51,6 +51,7 @@ module.exports = {
     updateState : function(sensor){
         SwitchSensor.findOne({internalId : sensor.internalId}).exec(function(err, switchSensor){
             if(err) sails.log('error','Error fetching Switch Sensor', err);
+            sails.log('info','Found a switchSensor : ', switchSensor);
             if(switchSensor == null){
                 var newSwitchSensor = {
                     deviceId : sensor.deviceId,
@@ -73,7 +74,7 @@ module.exports = {
     },
     toggleSwitch : function(sensor, cb){
         var that = this;
-        sails.log('debug','[MySensorService:toggleSwitch] Send status switch ... ', sensor, that.toggleState);
+        //sails.log('debug','[MySensorService:toggleSwitch] Send status switch ... ', sensor, that.toggleState);
         mySensorNode.sendMessage(sensor.internalid, that.enums.SensorCommand.C_SET, that.enums.SensorData.V_LIGHT, that.toggleState.toString());
         that.toggleState = that.toggleState == 1 ? 0 : 1;
         return cb();
