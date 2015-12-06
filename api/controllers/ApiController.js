@@ -58,7 +58,7 @@ module.exports = {
         });
     },
     getSensorReadingsHourly : function(req, res){
-        var deviceId = req.params('deviceid');
+        var deviceId = req.param('deviceid');
         Sensor.find({deviceid : parseInt(deviceId)}).exec(function(err, devices){
             var readingsPerSensorType =[];
             var daysBack = Date.craete('1 day ago');
