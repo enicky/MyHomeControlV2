@@ -64,7 +64,7 @@ module.exports = {
             var daysBack = Date.create('1 day ago');
             var getReadings = function(reading, cb){
                 Reading.native(function(err, collection){
-                    coçllection.aggregate([
+                    collection.aggregate([
                         {
                             $match : {
                                 internalId : reading.internalid,
