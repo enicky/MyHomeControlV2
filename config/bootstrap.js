@@ -119,14 +119,13 @@ module.exports.bootstrap = function (cb) {
   function checkMySensorSwitches(c){
     sails.log('debug','Finished Startup... request status of Switches');
     Sensor.find({type : '3'}).exec(function(err, sensors){
-      sails.log('debug','retrieved all switch sensors ... ', sensors);
+      sails.log('debug','retrieved all switch sensors ... ', sensors.length);
       sensors.forEach(function(sensor){
-        sails.log('debug','Checking status for switch : ', sensor);
+       // sails.log('debug','Checking status for switch : ', sensor);
         MySensorService.getSwitchStatus(sensor, function(){
-          sails.log('debug','Sent Status Request to sensor : ', sensor);
+          sails.log('debug','Sent Status Request to sensor : ', sensor.internalid);
         });
       });
-      sails.log('debug','Finished ... call done() ', c);
       c(null, 'true');
     });
   }

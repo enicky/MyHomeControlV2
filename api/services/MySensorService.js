@@ -54,7 +54,7 @@ module.exports = {
     getSwitchStatus : function(sensor, cb){
         var that = this;
         sails.log('debug','Get status of switch for sensor : ', sensor);
-        mySensorNode.sendMessage(sensor.internalid, that.enums.SensorCommand.C_REQ, that.enums.SensorData.V_Light, "0" );
+        mySensorNode.sendMessage(sensor.internalid, that.enums.SensorCommand.C_REQ, that.enums.SensorData.V_LIGHT, "0" );
         return cb();
     }
 };
