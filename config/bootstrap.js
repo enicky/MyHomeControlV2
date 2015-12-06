@@ -126,6 +126,7 @@ module.exports.bootstrap = function (cb) {
           sails.log('debug','Sent Status Request to sensor : ', sensor);
         });
       });
+      sails.log('debug','Finished ... call done()');
       done();
     });
   }
@@ -134,10 +135,11 @@ module.exports.bootstrap = function (cb) {
   // Bootstrap
   //
   async.parallel([
+    checkMySensorSwitches(),
     createDummyTodoData,
     createUserData,
     boostrapPassportMiddleware,
-      checkMySensorSwitches()
+
   ], cb);
 
 };
