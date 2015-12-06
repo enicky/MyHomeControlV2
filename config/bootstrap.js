@@ -135,7 +135,7 @@ module.exports.bootstrap = function (cb) {
   // Bootstrap
   //
   async.parallel([
-    checkMySensorSwitches(),
+    checkMySensorSwitches,
     createDummyTodoData,
     createUserData,
     boostrapPassportMiddleware,
