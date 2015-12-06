@@ -72,8 +72,65 @@ module.exports = {
                                     "$gte" : daysBack
                                 }
                             }
+                        },
+                        {
+                            "$project": {
+                                "y": {"$year": "$createdAt"},
+                                "m": {"$month": "$createdAt"},
+                                "d": {"$dayOfMonth": "$createdAt"},
+                                "h":{"$hour":"$createdAt"},
+                                "tweet": 1,
+                                "type": "$deviceTypeString",
+                                "val": ("$value"),
+                                "created_at": "$createdAt",
+                                "sensorid": "$sensorId",
+                                "deviceid": "$deviceId"
+                            }
+                        },
+                        {
+                            "$group": {
+                                "_id": {"year": "$y", "month": "$m", "day": "$d","hour":"$h", "type": "$type"},
+                                "value": {"$avg": "$val"},
+                                "aantal": {"$sum": 1},
+                                "sensorid": {"$first": "$sensorid"},
+                                "childid": {"$first": "$deviceid"},
+                                "type": {"$first": "$type"}
+                            }
+                        },
+                        {
+                            $sort : {
+                                "_id.year" : 1,
+                                "_id.month" : 1,
+                                "_id.day" : 1,
+                                "_id.hour" : 1
+                            }
                         }
-                    ])
+                    ],function (err, result) {
+                        //  sails.log('debug','result : ', result);
+                        //return cb(err, result);
+                        var r = {
+                            label : "reading " + reading.internalid,
+                            color : "#" + new RandomColor().toHex().value,
+                            //sensor : reading,
+                            data : []
+                        }
+
+                        r.data = result.map(function(m){
+                            //console.log('ma = ', m._id.year);
+                            var datum = new Date(m._id.year, m._id.month - 1, m._id.day, m._id.hour).getTime();
+                            //console.log('datum = ', datum);
+                            var data = [];
+                            data.push(datum)
+                            //DEBUG
+                            // data.push(new Date(m._id.year, m._id.month - 1, m._id.day)),
+                            data.push(m.value);
+                            return data;
+                        });
+                        r.data.reverse();
+                        if(result != null && result.length > 0)
+                            readingsPerSensorType.push(r);
+                        return cb();
+                    })
                 })
             }
             async.each(devices, function(reading, cb){
@@ -108,7 +165,7 @@ module.exports = {
                                 "y": {"$year": "$createdAt"},
                                 "m": {"$month": "$createdAt"},
                                 "d": {"$dayOfMonth": "$createdAt"},
-                                "h":{"$hour":"$createdAt"},
+                                //"h":{"$hour":"$createdAt"},
                                 "tweet": 1,
                                 "type": "$deviceTypeString",
                                 "val": ("$value"),
@@ -119,7 +176,7 @@ module.exports = {
                         },
                         {
                             "$group": {
-                                "_id": {"year": "$y", "month": "$m", "day": "$d","hour":"$h", "type": "$type"},
+                                "_id": {"year": "$y", "month": "$m", "day": "$d", "type": "$type"},
                                 "value": {"$avg": "$val"},
                                 "aantal": {"$sum": 1},
                                 "sensorid": {"$first": "$sensorid"},
@@ -131,8 +188,7 @@ module.exports = {
                             $sort : {
                                 "_id.year" : 1,
                                 "_id.month" : 1,
-                                "_id.day" : 1,
-                                "_id.hour" : 1
+                                "_id.day" : 1
                             }
                         }
 
@@ -148,7 +204,7 @@ module.exports = {
 
                         r.data = result.map(function(m){
                             //console.log('ma = ', m._id.year);
-                            var datum = new Date(m._id.year, m._id.month - 1, m._id.day, m._id.hour).getTime();
+                            var datum = new Date(m._id.year, m._id.month - 1, m._id.day).getTime();
                             //console.log('datum = ', datum);
                             var data = [];
                             data.push(datum)
