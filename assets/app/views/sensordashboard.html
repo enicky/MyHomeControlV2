@@ -1,0 +1,139 @@
+<h3>
+    <!-- START Language list-->
+    <div class="pull-right">
+        <div dropdown="" is-open="language.listIsOpen" class="btn-group">
+            <button type="button" dropdown-toggle="" class="btn btn-default">{{language.selected}}
+                <span class="caret"></span>
+            </button>
+            <ul role="menu" class="dropdown-menu dropdown-menu-right animated fadeInUpShort">
+                <li ng-repeat="(localeId, langName) in language.available"><a ng-click="language.set(localeId, $event)" href="#">{{langName}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END Language list    -->
+    Dashboard
+    <small>{{ 'dashboard.WELCOME' | translate:{ appName: app.name } }} !</small>
+</h3>
+<!-- START widgets box-->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel widget">
+            <div class="row row-table row-flush"  ng-controller="LiveController as live" >
+                <div ng-repeat="l in live.readings">
+                    <div class="col-xs-3 bb br">
+                        <div class="row row-table row-flush">
+                            <div class="col-xs-4 text-center text-info">
+                                <em class="ionicons ion-thermometer"></em>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="panel-body text-center">
+                                    <h4 class="mt0">{{l.value}}</h4>
+                                    <p class="mb0 text-muted">{{l.deviceTypeString}} {{l.internalId}}</p>
+                                    <p class="mb0 text-muted">{{l.createdAt}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel widget">
+            <div class="row row-table row-flush" ng-controller="LiveController as live">
+                <div ng-repeat="l in live.switches">
+                    <div class="col-xs-2 bb br">
+                        <div class="row row-table row-flush">
+                            <div class="col-xs-4 text-center text-info">
+                                <em class="ionicons ion-lightbulb"></em>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="panel-body text-center">
+                                    <h4 class="mt0">{{l.internalid}}</h4>
+                                    <p class="mb0 text-muted">{{l.deviceTypeString}}</p>
+                                    <toggle-switch ng-model="switchStatus" ng-change="switchChange(l.id)"><toggle-switch>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END widgets box-->
+<div class="row">
+    <!-- START dashboard main content-->
+    <div class="col-lg-9">
+        <!-- START chart-->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- START widget-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Readings
+                    </div>
+                    <div class="panel-body">
+                        <div ng-controller="DataTableController as table1">
+                            <table datatable="ng" class="row-border hover">
+                                <thead>
+                                <tr>
+                                    <th>Sensor ID</th>
+                                    <th>DeviceID</th>
+                                    <th>SensorID</th>
+                                    <th>Device Type</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="reading in table1.readings | orderBy:'-createdAt'">
+                                    <td>{{ reading.createdAt }}</td>
+                                    <td>{{ reading.internalId }}</td>
+                                    <td>{{ reading.deviceTypeString }}</td>
+                                    <td>{{ reading.value }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END widget-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Sensors
+                    </div>
+                    <div class="panel-body">
+                        <div ng-controller="DataTableController as table1">
+                            <table datatable="ng" class="row-border hover">
+                                <thead>
+                                <tr>
+                                    <th>Sensor ID</th>
+                                    <th>DeviceID</th>
+                                    <th>SensorID</th>
+                                    <th>Device Type</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="sensor in table1.sensors">
+                                    <td>{{ sensor.id }}</td>
+                                    <td>{{ sensor.deviceid }}</td>
+                                    <td>{{ sensor.sensorid }}</td>
+                                    <td>{{ sensor.deviceTypeString }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END chart-->
+    </div>
+    <!-- END dashboard main content-->
+    <!-- START dashboard sidebar-->
+
+</div>

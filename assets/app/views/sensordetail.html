@@ -1,0 +1,24 @@
+<h3>
+   <div class="pull-right text-center">
+      <div sparkline="" data-bar-color="#cfdbe2" data-height="20" data-bar-width="3" data-bar-spacing="2" values="1,0,4,9,5,7,8,9,5,7,8,4,7"></div>
+   </div>Flot charts</h3>
+<div ng-controller="SensorFlotChartController as chart" class="container-fluid">
+   <!-- START row-->
+   <div class="row">
+      <div class="col-lg-6">
+         <div id="panelChart9" class="panel panel-default">
+            <div class="panel-heading">
+               <paneltool tool-collapse="tool-collapse" tool-dismiss="tool-dismiss" tool-refresh="traditional"></paneltool>
+               <div class="panel-title">Area Spline</div>
+            </div>
+            <div collapse="panelChart9" class="panel-wrapper">
+               <div class="panel-body">
+                  <flot dataset="chart.splineData" options="chart.splineOptions" height="300px"></flot>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- END row-->
+
+</div>

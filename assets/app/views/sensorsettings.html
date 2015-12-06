@@ -1,0 +1,43 @@
+<h3>
+    Sensor Settings
+</h3>
+<div ng-controller="SensorSettingsController as sensorSettings" class="container-fluid">
+    <!-- START row-->
+    <div class="panel panel-default">
+        <div class="panel-heading">Sensors
+        </div>
+        <div class="panel-body">
+            <div >
+                <table datatable="ng" class="row-border hover">
+                    <thead>
+                    <tr>
+                        <th>Sensor ID</th>
+                        <th>DeviceID</th>
+                        <th>SensorID</th>
+                        <th>Device Type</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="sensor in sensorSettings.sensors">
+                        <td>{{ sensor.id }}</td>
+                        <td>{{ sensor.deviceid }}</td>
+                        <td>{{ sensor.sensorid }}</td>
+                        <td>{{ sensor.deviceTypeString }}</td>
+                        <td>
+                            <span class="dropdown">
+                                <a ng-href="#/settings/sensor/{{sensor.id}}">
+                                    <i class="fa fa-cog"></i>
+                                </a>
+
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- END row-->
+
+</div>
