@@ -59,7 +59,7 @@ module.exports = {
     },
     getSensorReadingsHourly : function(req, res){
         var deviceId = req.params('deviceid');
-        Sensor.find({deviceid : parseInt(deviceid)}).exec(function(err, devices){
+        Sensor.find({deviceid : parseInt(deviceId)}).exec(function(err, devices){
             var readingsPerSensorType =[];
             var daysBack = Date.craete('1 day ago');
             var getReadings = function(reading, cb){
