@@ -8109,7 +8109,7 @@
             })
         };
         $scope.switchChange = function(id){
-            $log.log('change switch status ... ');
+            $log.log('change switch status ... ', id);
             $log.log('test buttonclick');
             $resource('/api/switch/' + id).get().$promise.then(function(result){
                 $log.log('result switch : ', result);
@@ -8118,12 +8118,14 @@
         io.socket.on('sensor.reading', function(msg){
             $scope.$apply(function(){
                 $log.log('io sensor : reading : ', msg);
+                if(vm.readings){
                 vm.readings.forEach(function(n){
                     if(n.internalId == msg.internalId){
                         n.value = msg.value;
 
                     }
                 })
+                }
             })
         });
         io.socket.on('sensor.switch.status', function(msg){
