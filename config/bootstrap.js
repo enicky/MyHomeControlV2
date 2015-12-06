@@ -118,7 +118,7 @@ module.exports.bootstrap = function (cb) {
 
   function checkMySensorSwitches(c){
     sails.log('debug','Finished Startup... request status of Switches');
-    Sensor.find({type : 3}).exec(function(err, sensors){
+    Sensor.find({type : '3'}).exec(function(err, sensors){
       sails.log('debug','retrieved all switch sensors ... ', sensors);
       sensors.forEach(function(sensor){
         sails.log('debug','Checking status for switch : ', sensor);
