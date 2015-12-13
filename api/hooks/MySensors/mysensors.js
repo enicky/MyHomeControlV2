@@ -10,13 +10,13 @@ var sugar = require('sugar');
 var mySensorEnums = require('./enums');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-var _currentDevices = new Object();
+var _currentDevices = {};
 var fs = require('fs');
 var path = require('path');
 
 
 var MySensorNode = function(sails) {
-
+    this.initialized = false;
     this.sails = sails;
     var enums = new mySensorEnums();
     var _debug = false;
@@ -44,7 +44,7 @@ var MySensorNode = function(sails) {
                 return "C_STREAM";
                 break;
         }
-    }
+    };
 
     this.getDeviceTypeName = function(type) {
         switch (parseInt(type)) {
@@ -100,7 +100,7 @@ var MySensorNode = function(sails) {
             case enums.SensorSensor.S_SCENE_CONTROLLER.value:
                 return "S_SCENE_CONTROLLER";
         }
-    }
+    };
 
     this.getStreamVariableTypeName = function(type) {
         switch (parseInt(type)) {
@@ -117,7 +117,7 @@ var MySensorNode = function(sails) {
             case enums.SensorStream.ST_IMAGE.value:
                 return "ST_IMAGE";
         }
-    }
+    };
 
     this.getVariableTypeName = function(type) {
         //console.log('current variableTypeName : ' + type);
@@ -203,7 +203,7 @@ var MySensorNode = function(sails) {
             case enums.SensorData.V_CURRENT.value:
                 return "V_CURRENT";
         }
-    }
+    };
 
     this.getInternalTypeName = function(type) {
         switch (parseInt(type)) {
@@ -238,7 +238,7 @@ var MySensorNode = function(sails) {
             case enums.SensorInternal.I_GATEWAY_READY.value:
                 return "I_GATEWAY_READY";
         }
-    }
+    };
     //return beautifum string ;o)
     this.prettify = function(message, that) {
         //console.log('message : ', message);
@@ -278,7 +278,7 @@ var MySensorNode = function(sails) {
             result += ';' + payload;
         }
         return result;
-    }
+    };
 
     //handle messages received ...
     this.handleMessage = function(message, that) {
@@ -325,12 +325,12 @@ var MySensorNode = function(sails) {
                                 break;
                             case enums.SensorInternal.I_ID_REQUEST.value:
                                 Incrementor.findOne({}).sort({createdAt:'desc'}).exec(function(err, inc){
-                                    var newInc = {}
+                                    var newInc = {};
                                     if(inc == null){
                                         newInc.id = 10;
                                     }else{
                                         newInc.id = inc.id + 1;
-                                    };
+                                    }
                                     sails.log('debug','[MySensors] Sending new id after request : ', newInc);
                                     Incrementor.create(newInc).exec(function(err, n){
                                         that.sendMessage(internalid, enums.SensorCommand.C_INTERNAL.value, enums.SensorInternal.I_ID_RESPONSE.value, newInc.id.toString());
@@ -592,14 +592,16 @@ var MySensorNode = function(sails) {
         }
 
 
-    }
+    };
 
     this.sendCompleteMessage = function(message) {
+        if(!this.initialized) return;
         var targetMessage = message + '\n';
         this._serialPort.write(targetMessage);
-    }
+    };
     //write message to serial port
     this.sendMessage = function(internalid, type, subtype, value) {
+        if(! this.initialized) return;
         var items = internalid.split('/');
         var that = this;
         var ack = "0";
@@ -621,7 +623,7 @@ var MySensorNode = function(sails) {
 
         //that._serialPort.write('0;0;4;4;\n');
     }
-}
+};
 util.inherits(MySensorNode, EventEmitter);
 
 
@@ -630,6 +632,7 @@ MySensorNode.prototype.init = function(options) {
     this._debug = options && options.debug ? true : false;
     this._portname = options && options.portname ? options.portname : '/dev/ttyMySensorsGateway';
     this._serialPort = new SerialPort(this._portname);
+    this.initialized = true;
 };
 
 //open the connection and connect the listener ...
@@ -643,14 +646,14 @@ MySensorNode.prototype.openConnection = function(cb) {
         });
         return cb();
     });
-}
+};
 
 MySensorNode.prototype.start = function() {
     var that = this;
 
     var getVersionRequest = '0;0;3;0;2;';
     this.sendCompleteMessage(getVersionRequest);
-}
+};
 
 MySensorNode.prototype.newDevice = function(internalid, devicetype, that) {
     var deviceId = internalid.substring(0, internalid.indexOf('/'));
@@ -670,7 +673,7 @@ MySensorNode.prototype.newDevice = function(internalid, devicetype, that) {
             that.addDevice(internalid, devicetype, that);
         }
     })
-}
+};
 
 MySensorNode.prototype.addDevice = function(internalid, devicetype, that) {
     var newSensor = {
@@ -719,7 +722,7 @@ MySensorNode.prototype.addDevice = function(internalid, devicetype, that) {
     })
 
 
-}
+};
 
 MySensorNode.prototype.saveDeviceInfo = function(that, deviceInfo, internalid, cb) {
 
@@ -755,5 +758,5 @@ MySensorNode.prototype.getDeviceInfo = function(radioId, childId, cb) {
         if(s == null) return cb(null, null);
         return cb(null, s);
     });
-}
+};
 exports = module.exports = MySensorNode;
