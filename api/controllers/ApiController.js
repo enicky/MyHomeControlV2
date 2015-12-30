@@ -25,7 +25,7 @@ module.exports = {
     },
 
     sensorsIndex : function(req, res){
-        Sensor.find({deviceTypeString : {'!' : 'V_LIGHT'}}).sort({internalid : 'desc'}).exec(function(err, sensors){
+        Sensor.find({deviceTypeString : {'!' : 'S_LIGHT'}}).sort({internalid : 'desc'}).exec(function(err, sensors){
             if(err) sails.log('error', 'err : ', err);
             sails.log('debug','Sensors: ', sensors);
             return res.send(sensors);
