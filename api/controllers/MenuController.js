@@ -30,17 +30,25 @@ module.exports = {
                 "label" : "label label-success"
             }
 
+            var udooNeo = {
+                "text" : "UDOO Neo",
+                "sref" : "app.udooNeo",
+                "icon" : "fa fa-code",
+                "label" : "label label-success"
+            };
             Menu.create(root).exec(function(err, menuItem){
                 items.push(root);
                 Menu.create(level1).exec(function(err, menuItem){
                     items.push(menuItem);
                     Menu.create(settings).exec(function(err, menuItem){
                         items.push(settings);
-                        cb(items);
-                    })
-
-                })
-            })
+                        Menu.create(udooNeo).exec(function(err, menuItem){
+                            items.push(udooNeo);
+                            cb(items);
+                        });
+                    });
+                });
+            });
         }
 
         Menu.find().exec(function(err, menuItems) {
