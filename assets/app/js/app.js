@@ -8114,7 +8114,7 @@
         $scope.switchChange = function(id){
             $log.log('change switch status ... ', id);
             $log.log('test buttonclick ', id.id);
-            $resource('/api/switch/' + id.id).get().$promise.then(function(result){
+            $resource('/api/switch/' + id.internalId).get().$promise.then(function(result){
                 $log.log('result switch : ', result);
             })
         };
