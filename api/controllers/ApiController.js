@@ -8,6 +8,7 @@ var passport = require('passport');
 var sugar = require('sugar');
 var async = require('async');
 var RandomColor = require('just.randomcolor');
+var ObjectID = require('sails-mongo/node_modules/mongodb').ObjectID;
 
 module.exports = {
     accountLogin : function(req, res){
@@ -240,8 +241,9 @@ module.exports = {
     },
     toggleSwitch : function(req, res){
         var id = req.param('id');
+        var o_id = new ObjectID(req.param('id'));
         sails.log('debug','request passed "' +   id + '" as param ... id ');
-        Sensor.findOne({internalid : id}).exec(function(err, sensor){
+        Sensor.findOne({id : o_id}).exec(function(err, sensor){
             sails.log('debug','toggle switch : ', sensor);
             MySensorService.toggleSwitch(sensor, function(){
                 return res.send({success : true});
