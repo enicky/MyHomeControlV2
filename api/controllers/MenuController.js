@@ -29,7 +29,12 @@ module.exports = {
                 "icon" : "fa fa-cogs",
                 "label" : "label label-success"
             }
-
+            var latestReadings = {
+                "text" : "Latest Readings",
+                "sref" : "app.sensorlatestreadings",
+                "icon" : "icon-speedometer",
+                "label" : "label label-success"
+            }
             var udooNeo = {
                 "text" : "UDOO Neo",
                 "sref" : "app.udooNeo",

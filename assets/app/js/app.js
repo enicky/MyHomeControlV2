@@ -7397,6 +7397,9 @@
                 title:'Sensor Settings',
                 templateUrl : helper.basepath('sensorsettingdetail.html')
             })
+            .state('sensorlatestreadings', {
+                url:'/sensorlatestreadings'
+            })
           .state('app.dashboard', {
               url: '/dashboard',
               title: 'Dashboard',
@@ -8110,8 +8113,8 @@
         };
         $scope.switchChange = function(id){
             $log.log('change switch status ... ', id);
-            $log.log('test buttonclick');
-            $resource('/api/switch/' + id).get().$promise.then(function(result){
+            $log.log('test buttonclick ', id.id);
+            $resource('/api/switch/' + id.id).get().$promise.then(function(result){
                 $log.log('result switch : ', result);
             })
         };
