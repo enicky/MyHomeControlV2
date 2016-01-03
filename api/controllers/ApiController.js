@@ -240,7 +240,8 @@ module.exports = {
     },
     toggleSwitch : function(req, res){
         var id = req.param('id');
-        Sensor.findOne({id : id}).exec(function(err, sensor){
+        sails.log('debug','request passed "' +   id + '" as param ... id ');
+        Sensor.findOne(id).exec(function(err, sensor){
             sails.log('debug','toggle switch : ', sensor);
             MySensorService.toggleSwitch(sensor, function(){
                 return res.send({success : true});
