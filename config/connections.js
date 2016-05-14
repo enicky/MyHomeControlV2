@@ -58,7 +58,7 @@ module.exports.connections = {
      ***************************************************************************/
     someMongodbServer: {
         adapter: 'sails-mongo',
-        host: '172.16.0.136',
+        host: 'iot.gitlab.be',
         port: 27017,
         // user: 'username',
         // password: 'password',
