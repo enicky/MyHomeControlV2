@@ -22,6 +22,9 @@ module.exports.policies = {
     unauthorized: 'isAuthorized',
     forbidden:    false           // Acts oddly in socket mode?
   },
+	AngularController : {
+		'*' : 'isBearerAuthorized'
+	},
 
   PassportAuthController: {
     '*': true,

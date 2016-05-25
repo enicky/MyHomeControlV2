@@ -69,6 +69,7 @@ module.exports.routes = {
 
   //Angular2 API
   'get /api/angular/dashboard/sensors' : 'AngularController.getDashboardSensors',
+  'get /api/angular/dashboard/toggleswitch/:id' : 'AngularController.toggleSwitch',
 
 
   /*

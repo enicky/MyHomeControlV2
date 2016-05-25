@@ -30,7 +30,7 @@ module.exports.cors = {
 	// use the default settings below.
 	allRoutes: true,
 
-	"get /apî/angular/sensors" : {
+	"get /api/angular/sensors" : {
 		controller : 'AngularController',
 		action : "sensors",
 		cors : true
@@ -50,6 +50,6 @@ module.exports.cors = {
 
 	// Which headers should be allowed for CORS requests?  This is only used
 	// in response to preflight requests.
-	headers: 'content-type'
+	headers: 'content-type, Authorization'
 
 };

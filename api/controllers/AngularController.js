@@ -7,6 +7,8 @@
 
 var sugar = require('sugar');
 var async = require('async');
+var ObjectID = require('sails-mongo/node_modules/mongodb').ObjectID;
+
 
 module.exports = {
     getDashboardSensors : function(req, res){
@@ -32,6 +34,20 @@ module.exports = {
                 return res.json(sensorsToReturn);
             })
         })
+    },
+    toggleSwitch : function(req, res){
+        var id = req.param('id');
+        sails.log.info('request passed "' +   id + '" as param ... id ');
+
+        var o_id = new ObjectID(req.param('id'));
+        Sensor.findOne({id : o_id}).exec(function(err, sensor){
+            sails.log('debug','toggle switch : ', sensor);
+            MySensorService.toggleSwitch(sensor, function(){
+                return res.send({success : true});
+            });
+
+
+        });
     }
 };
 
