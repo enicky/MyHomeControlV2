@@ -696,6 +696,7 @@ MySensorNode.prototype.addDevice = function(internalid, devicetype, that) {
             //update
             sensor.type = devicetype;
             sensor.deviceTypeString = deviceTypeString;
+            sails.log.info('[MySensors:addDevice] Updating device to : ', sensor);
             sensor.save(function(err, sensor) {
                 if(err){
                     sails.log.error('Error Update device : ', err);
