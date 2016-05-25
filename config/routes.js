@@ -64,7 +64,11 @@ module.exports.routes = {
 
   'get /menu/index' :'MenuController.index',
 
-  'get /api/settings' : 'ApiController.getSettingsIndex'
+  'get /api/settings' : 'ApiController.getSettingsIndex',
+
+
+  //Angular2 API
+  'get /api/angular/dashboard/sensors' : 'AngularController.getDashboardSensors',
 
 
   /*

@@ -12,6 +12,9 @@ module.exports = {
         sails.log('debug','Starting the Process to poll for the serial port ... ');
         mySensorNode = new MySensorNode(sails);
 
+        mySensorNode.on('sensor.remove', function(internalid){
+            MySensorService.removeSensor(internalid);
+        })
         mySensorNode.on('sensor.reading', function(data){
             var newSensorValyue = {
                 internalId : data.id,
@@ -47,6 +50,9 @@ module.exports = {
         }else{
             return cb();
         }
+    },
+    removeSensor : function(internalId){
+      Sensor
     },
     updateState : function(sensor){
         SwitchSensor.findOne({internalId : sensor.internalId}).exec(function(err, switchSensor){

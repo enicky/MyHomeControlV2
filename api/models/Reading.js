@@ -13,7 +13,10 @@ module.exports = {
         internalId : {type : 'string'},
         type : {type : 'integer'},
         deviceTypeString : {type : 'string'},
-        value : {type : 'float'}
+        value : {type : 'float'},
+        sensor : {
+            model : 'sensor'
+        }
     }
 };
 

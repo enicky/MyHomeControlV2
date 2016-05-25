@@ -16,8 +16,11 @@ module.exports = {
         counter_failed: {type: 'integer'},
         counter_retries: {type: 'integer'},
         counter_received: {type: 'integer'},
-        counter_sent: {type: 'integer'}
-
+        counter_sent: {type: 'integer'},
+        readings : {
+            collection : "reading",
+            via : 'sensor'
+        }
     }
 };
 
