@@ -568,6 +568,14 @@ var MySensorNode = function(sails) {
                                     type: 'rain'
                                 });
                                 break;
+                            case enums.SensorData.V_KWH.value:
+                                valid = true;
+                                that.emit('sensor.reading', {
+                                    id: internalid,
+                                    value : payload,
+                                    type : 'kwh'
+                                });
+                                break;
                         }
                         if (valid && deviceInfo != null) {
                             deviceInfo.value = payload;
