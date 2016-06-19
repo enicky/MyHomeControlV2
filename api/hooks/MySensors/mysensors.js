@@ -418,7 +418,7 @@ var MySensorNode = function(sails) {
                                 that.newDevice(internalid, "weightsensor", that);
                                 break;
                             case enums.SensorSensor.S_POWER.value:
-                                that.newDevice(internalid, "powermeter", that);
+                                that.newDevice(internalid, enums.SensorSensor.S_POWER, that);
                                 break;
                             case enums.SensorSensor.S_DISTANCE.value:
                                 that.newDevice(internalid, "distancesensor", that);
