@@ -3,5 +3,5 @@
  */
 module.exports.mysensorconfig = {
     serialport: '/dev/ttyMySensorsGateway',
-    enabled: false
+    enabled: true
 }
