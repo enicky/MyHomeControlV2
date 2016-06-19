@@ -327,7 +327,7 @@ var MySensorNode = function(sails) {
                                 Incrementor.findOne({}).sort({createdAt:'desc'}).exec(function(err, inc){
                                     var newInc = {};
                                     if(inc == null){
-                                        newInc.id = 10;
+                                        newInc.id = 11;
                                     }else{
                                         newInc.id = inc.id + 1;
                                     }
@@ -685,13 +685,18 @@ MySensorNode.prototype.addDevice = function(internalid, devicetype, that) {
         counter_failed: "0"
     };
 
+    sails.log.info('internalId : ', internaleid);
+    sails.log.info('deviceType : ', devicetype);
+
     _currentDevices[internalid] = newSensor;
     var splittedId = internalid.split('/');
     var deviceTypeString = that.getDeviceTypeName(devicetype.value);
 
+    sails.log.info('deviceTypetring : ', deviceTypeString);
     that.sails.models.sensor.findOne({
         internalid: internalid//.replace('/', ',')
     }).exec(function(err, sensor) {
+        sails.log.info('sensor => ', sensor);
         if (typeof(sensor) != "undefined" && sensor != null) {
             //update
             sensor.type = devicetype.value.toString();
