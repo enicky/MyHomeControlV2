@@ -693,7 +693,7 @@ MySensorNode.prototype.addDevice = function(internalid, devicetype, that) {
         counter_failed: "0"
     };
 
-    sails.log.info('internalId : ', internaleid);
+    sails.log.info('internalId : ', internalid);
     sails.log.info('deviceType : ', devicetype);
 
     _currentDevices[internalid] = newSensor;
