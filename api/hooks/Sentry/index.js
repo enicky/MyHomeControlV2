@@ -11,7 +11,9 @@ module.exports = function mySentryHook(sails) {
             var client = new raven.Client(process.env.SENTRY_URL);
             client.patchGlobal();
 
-            sails.log('debug','finished start hook');
+            //test
+
+            sails.log('debug','[Sentry:initialize] finished start hook');
             return cb();
         }
     }
